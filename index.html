@@ -2,30 +2,30 @@
 <html>
 
 <head>
-    <title>Banker's Algorithm Simulator</title>
+    <title>Giải thuật ngân hàng nhóm 5M</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="code.js"></script>
 </head>
 
 <body>
 
-    <h1>Banker's Algorithm</h1>
+    <h1>giải thuật ngân hàng (banker's algorithm)</h1>
 
     <div id="wrapper">
         <div id="inputs">
-            <p>Enter number of processes : <input type="text" id="numProcess"></p>
-            <p>Enter types of resources : <input type="text" id="numResource"></p>
+            <p>Nhập số tiến trình : <input type="text" id="numProcess"></p>
+            <p>Nhập loại tài nguyên : <input type="text" id="numResource"></p>
         </div>
 
         <div id="buttons">
-            <input type="button" id="createTables" value="Create All Tables" onclick="createTables()"><br>
-            <input type="button" id="findNeed" value="Find need" onclick="findNeed()" disabled>
+            <input type="button" id="createTables" value="Tạo bảng" onclick="createTables()"><br>
+            <input type="button" id="findNeed" value="Tìm Need" onclick="findNeed()" disabled>
             &nbsp;&nbsp;&nbsp;
-            <input type="button" id="findAvailable" value="Find available" onclick="findAvailable()" disabled><br>
-            <input type="button" id="safeSequence" value="Find Safe Sequence" 
+            <input type="button" id="findAvailable" value="Tìm Available" onclick="findAvailable()" disabled><br>
+            <input type="button" id="safeSequence" value="Tìm chuỗi an toàn" 
             onclick="generateSafeSeq()" disabled><br>
-            <input type="button" id="resourceRequest" value="Make a Resource Request" onclick="resourceRequest()" disabled><br>
-            <input type="button" id="checkSafety" value="Check Safe state" onclick="checkSafeState()" disabled><br>
+            <input type="button" id="resourceRequest" value="Yêu cầu tài nguyên" onclick="resourceRequest()" disabled><br>
+            <input type="button" id="checkSafety" value="Kiểm tra chuỗi an toàn" onclick="checkSafeState()" disabled><br>
             <input type="button" id="reset" value="Reset" onclick="reset()">
 
         </div>
@@ -34,8 +34,8 @@
     <div id="allTables"></div>
     <div id="resourceRequestPart">
         <br><hr>
-        <p id="title">Resource Request</p>
-        <p>Enter process number that wants to make request : 
+        <p id="title">Yêu cầu tài nguyên</p>
+        <p>Nhập tiến trình muốn yêu cầu thêm tài nguyên : 
             <input type="text" id="requestProcess"></p>
     </div>
     <div id="makeResourceRequest"></div>

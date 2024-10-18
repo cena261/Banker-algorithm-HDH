@@ -66,7 +66,7 @@ function gridTable(ch, tableName, tableId, divId) {
         td.appendChild(document.createTextNode(String.fromCharCode("A".charCodeAt(0) + (j - 1))));
       }
       else if (j == 0) {
-        td.appendChild(document.createTextNode("Process " + i));
+        td.appendChild(document.createTextNode("P" + (i - 1)));
       }
       else {
         var input = document.createElement("input");
@@ -121,18 +121,18 @@ function createTables() {
   var resource = document.getElementById("numResource").value;
 
   if (!process) {
-    alert('Enter number of process')
+    alert('Nhập số lượng tiến trình')
     return;
   }
 
   if (!resource) {
-    alert('Enter types of resources')
+    alert('Nhập loại tài nguyên')
     return;
   }
 
-  columnTable('r', 'Resource Table', 'resourceTable', 'allTables');
-  gridTable('a', 'Allocation Table', 'allocationTable', 'allTables');
-  gridTable('m', 'Maximum Table', 'maximumTable', 'allTables');
+  columnTable('r', 'Bảng tài nguyên', 'resourceTable', 'allTables');
+  gridTable('a', 'Bảng cấp phát (Allocation)', 'allocationTable', 'allTables');
+  gridTable('m', 'Bảng Max', 'maximumTable', 'allTables');
 
   document.getElementById("createTables").disabled = true;
   document.getElementById("findNeed").disabled = false;
@@ -197,11 +197,11 @@ function findNeed() {
   var resource = document.getElementById("numResource").value;
 
   if (!isValid()) {
-    alert('Invalid data')
+    alert('Nhập dữ liệu không hợp lệ')
     reset();
   }
 
-  gridTable('n', 'Need Table', 'needTable', 'allTables');
+  gridTable('n', 'Bảng Need', 'needTable', 'allTables');
   calculateNeed();
 
   var ele = document.getElementById('allTables');
@@ -210,7 +210,7 @@ function findNeed() {
     var data = document.createElement('h2');
     data.id = 'needData' + i;
 
-    let str = 'Need (Process ' + i + ') = ';
+    let str = 'Need (P' + (i-1) + ') = ';
     str += "Max (";
 
     for (var j = 1; j <= resource; j++) {
@@ -273,11 +273,11 @@ function findAvailable() {
   var resource = document.getElementById("numResource").value;
 
   if (!isValid()) {
-    alert('Invalid data')
+    alert(' Dữ liệu không hợp lệ');
     reset();
   }
 
-  columnTable('av', 'Available Table', 'availableTable', 'allTables');
+  columnTable('av', 'Bảng tài nguyên sẵn có (Available)', 'availableTable', 'allTables');
   calculateAvailable();
 
   var ele = document.getElementById('allTables');
@@ -286,8 +286,8 @@ function findAvailable() {
     var data = document.createElement('h2');
     data.id = 'availData' + j;
 
-    let str = 'Available (Resource ' + String.fromCharCode("A".charCodeAt(0) + (j - 1)) + ') = Total (';
-    str += document.getElementById('r' + j).value + ") - Total allocated (";
+    let str = 'Available (Resource ' + String.fromCharCode("A".charCodeAt(0) + (j - 1)) + ') = Tổng (';
+    str += document.getElementById('r' + j).value + ") - Đã cấp phát (";
 
     for (var i = 1; i <= process; i++) {
       str += document.getElementById('a' + i + j).value;
@@ -376,7 +376,7 @@ function safetyAlgorithm(ch, tableName, tableId, divId) {
   safeSequenceTable(ch, tableName, tableId, divId);
 
   for (let i = 1; i <= process; i++) {
-    document.getElementById(ch + i).value = sequence[i - 1];
+    document.getElementById(ch + i).value = sequence[i - 1] - 1;
     document.getElementById(ch + i).disabled = true;
   }
 
@@ -386,7 +386,7 @@ function safetyAlgorithm(ch, tableName, tableId, divId) {
     var data = document.createElement('h2');
     var pro = sequence[i - 1];
 
-    let str = 'Process ' + pro + ' : Need (';
+    let str = 'P' + (pro - 1) + ' : Need (';
 
     for (var j = 1; j <= resource; j++) {
       str += document.getElementById('n' + pro + j).value;
@@ -401,7 +401,7 @@ function safetyAlgorithm(ch, tableName, tableId, divId) {
       if (j != resource)
         str += ","
       else
-        str += ") -> New Available (";
+        str += ") -> Available mới (";
     }
 
     for (var j = 1; j <= resource; j++) {
@@ -438,8 +438,8 @@ function generateSafeSeq() {
     data.remove();
   }
 
-  if (!safetyAlgorithm('safe', 'Safe Sequence', 'safeSequence', 'allTables')) {
-    alert('The system is not in safe state');
+  if (!safetyAlgorithm('safe', 'Chuỗi an toàn', 'safeSequence', 'allTables')) {
+    alert('Chuỗi không an toàn');
     reset();
   }
 
@@ -484,7 +484,7 @@ function resourceRequest() {
   document.getElementById('makeResourceRequest').style.visibility = 'visible';
   cleanChilds('makeResourceRequest');
   document.getElementById('requestProcess').value = "";
-  columnTable('req', 'Resource Request Table', 'resourceRequestTable', 'makeResourceRequest');
+  columnTable('req', 'Bảng yêu cầu tài nguyên', 'resourceRequestTable', 'makeResourceRequest');
 
   getBackToPrevious();
   document.getElementById('checkSafety').disabled = false;
@@ -499,12 +499,12 @@ function checkSafeState() {
   var reqProcess = document.getElementById('requestProcess').value;
 
   if (!reqProcess) {
-    alert('Enter process number that wants to make request');
+    alert('Nhập tiến trình muốn yêu cầu tài nguyên');
     return;
   }
 
   if (reqProcess < 1 || reqProcess > process) {
-    alert('Invalid process number');
+    alert('Tiến trình không hợp lệ');
     document.getElementById('requestProcess').value = "";
     return;
   }
@@ -517,7 +517,7 @@ function checkSafeState() {
   }
 
   if (!isValid()) {
-    alert('Invalid resource request made');
+    alert('Dữ liệu yêu cầu không hợp lệ');
     for (let i = 1; i <= resource; i++) {
       var newReq = document.getElementById('req' + i).value;
       var prevReq = document.getElementById('a' + reqProcess + i).value;
@@ -530,8 +530,8 @@ function checkSafeState() {
   calculateNeed();
   calculateAvailable();
 
-  if (!safetyAlgorithm('requestSafe', 'Safe Sequence', 'requestSafeSequenceTable', 'makeResourceRequest')) {
-    alert('The resource request made will lead to unsafe state');
+  if (!safetyAlgorithm('requestSafe', 'Chuỗi an toàn', 'requestSafeSequenceTable', 'makeResourceRequest')) {
+    alert('Yêu cầu không hợp lệ, hệ thống không ở trạng thái an toàn');
 
     getBackToPrevious();
 
@@ -549,7 +549,7 @@ function checkSafeState() {
   }
 
   else {
-    alert('The resource request made is valid and can be granted');
+    alert('Yêu cầu hợp lệ, hệ thống vẫn ở trạng thái an toàn');
     getBackToPrevious();
 
   }
