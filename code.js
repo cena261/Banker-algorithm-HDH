@@ -1,3 +1,4 @@
+//Tạo bảng
 function columnTable(ch, tableName, tableId, divId) {
 
   var resource = document.getElementById("numResource").value;
@@ -172,7 +173,7 @@ function isValid() {
 
   return true;
 }
-
+//Tim need
 function calculateNeed() {
 
   var process = document.getElementById("numProcess").value;
@@ -210,7 +211,7 @@ function findNeed() {
     var data = document.createElement('h2');
     data.id = 'needData' + i;
 
-    let str = 'Need (P' + (i-1) + ') = ';
+    let str = 'Need (P' + (i-1) + ') = '; //change
     str += "Max (";
 
     for (var j = 1; j <= resource; j++) {
@@ -247,7 +248,7 @@ function findNeed() {
   document.getElementById("findAvailable").disabled = false;
 
 }
-
+// Tìm available
 function calculateAvailable() {
 
   var process = document.getElementById("numProcess").value;
@@ -309,7 +310,7 @@ function findAvailable() {
 function reset() {
   location.reload();
 }
-
+//Tìm chuỗi an toàn
 function safetyAlgorithm(ch, tableName, tableId, divId) {
 
   var process = document.getElementById("numProcess").value;
@@ -376,7 +377,7 @@ function safetyAlgorithm(ch, tableName, tableId, divId) {
   safeSequenceTable(ch, tableName, tableId, divId);
 
   for (let i = 1; i <= process; i++) {
-    document.getElementById(ch + i).value = sequence[i - 1] - 1;
+    document.getElementById(ch + i).value = sequence[i - 1] - 1; //change
     document.getElementById(ch + i).disabled = true;
   }
 
@@ -477,7 +478,7 @@ function getBackToPrevious() {
 
   document.getElementById("findAvailable").disabled = true;
 }
-
+//Yêu cầu tài nguyên
 function resourceRequest() {
 
   document.getElementById('resourceRequestPart').style.visibility = 'visible';
@@ -497,13 +498,14 @@ function checkSafeState() {
   var resource = document.getElementById("numResource").value;
 
   var reqProcess = document.getElementById('requestProcess').value;
+  reqProcess = Number(reqProcess) + 1;
 
   if (!reqProcess) {
     alert('Nhập tiến trình muốn yêu cầu tài nguyên');
     return;
   }
 
-  if (reqProcess < 1 || reqProcess > process) {
+  if (reqProcess < 0 || reqProcess >= process) {
     alert('Tiến trình không hợp lệ');
     document.getElementById('requestProcess').value = "";
     return;
@@ -530,7 +532,7 @@ function checkSafeState() {
   calculateNeed();
   calculateAvailable();
 
-  if (!safetyAlgorithm('requestSafe', 'Chuỗi an toàn', 'requestSafeSequenceTable', 'makeResourceRequest')) {
+  if (!safetyAlgorithm('requestSafe', 'testChuỗi an toàn', 'requestSafeSequenceTable', 'makeResourceRequest')) {
     alert('Yêu cầu không hợp lệ, hệ thống không ở trạng thái an toàn');
 
     getBackToPrevious();
