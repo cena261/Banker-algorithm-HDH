@@ -114,3 +114,13 @@ input[type='button'] {
 hr {
   border: 2px solid green;
 }
+#makeResourceRequest {
+  margin-top: 20px; /* Đảm bảo có khoảng cách phía trên */
+}
+
+#makeResourceRequest p, #makeResourceRequest div {
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  color: indigo;
+}
